@@ -60,7 +60,7 @@ app.use('/api',apiRouter);
 
 //jwt startegy
 function  getjwt(req){
-  // console.log("this is token",req.cookies.jwt_token);
+  console.log("this is token",req.cookies.jwt_token);
   const token = req.cookies.jwt_token
   return token;
   // return localStorage.Authorization?.substring(7); //removes "bearer " from token
