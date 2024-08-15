@@ -102,17 +102,17 @@ app.post(
       const token = jwt.sign({user:body}, "secret",{expiresIn:'1d'}); 
       const updatedUser= await User.findByIdAndUpdate(user._id, {isactive:true}, {}).exec();
       
-      // DELETE DONT NEED (COOKIES USED INSTEAD)
-      // await fs.writeFile(
-      //   "localStorage.json",
-      //   JSON.stringify({Authorization: `Bearer ${token}`}),
-      //   (err)=>{
-      //     if(err){
-      //     throw err;
-      //     //  return next(err);
-      //     }
-      //   }
-      // )
+     // DELETE DONT NEED (COOKIES USED INSTEAD)
+      await fs.writeFile(
+        "localStorage.json",
+        JSON.stringify({Authorization: `Bearer ${token}`}),
+        (err)=>{
+          if(err){
+          throw err;
+          //  return next(err);
+          }
+        }
+      )
       res.json({user,token});
     }
     
@@ -125,15 +125,15 @@ app.post("/logout", async (req, res, next) => {
       return next(err);
     }
     //DONT NEED DELETE  
-    // fs.writeFile(
-    //   "localStorage.json",
-    //   JSON.stringify({Authorization: ``}),
-    //   (err)=>{
-    //     if(err){
-    //      throw err;
-    //     }
-    //   }
-    // )
+    fs.writeFile(
+      "localStorage.json",
+      JSON.stringify({Authorization: ``}),
+      (err)=>{
+        if(err){
+         throw err;
+        }
+      }
+    )
 
     res.json("loggin out");
   });
