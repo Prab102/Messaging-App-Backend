@@ -12,6 +12,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const jwt = require("jsonwebtoken");
 const JwtStrategy = require('passport-jwt').Strategy;
+const { Strategy, ExtractJwt } = require('passport-jwt');
 
 const User = require("./models/user");
 require('dotenv').config()
@@ -22,6 +23,7 @@ var usersRouter = require('./routes/users');
 let apiRouter = require('./routes/api.js');
 
 var app = express();
+app.use(cookieParser());
 
 
 // Set up mongoose connection
@@ -40,31 +42,13 @@ app.set('view engine', 'pug');
 
 app.use(passport.initialize());
 
-//jwt startegy
-function  getjwt(){
-  return localStorage.Authorization?.substring(7); //removes "bearer " from token
-}
 
-passport.use(
-  new JwtStrategy(
-    {
-      secretOrKey: "secret",
-      jwtFromRequest: getjwt,
-    },
-    async(token,done) =>{
-      
-        done(null,token.user);
-    }
-  )
-)
-
-
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:5173", exposedHeaders: ["set-cookie"] })) //change when live
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true })); //authentication
@@ -74,7 +58,28 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api',apiRouter);
 
+//jwt startegy
+function  getjwt(req){
+  // console.log("this is token",req.cookies.jwt_token);
+  const token = req.cookies.jwt_token
+  return token;
+  // return localStorage.Authorization?.substring(7); //removes "bearer " from token
+}
 
+
+passport.use(
+  new JwtStrategy(
+    {
+      secretOrKey: "secret",
+      jwtFromRequest: getjwt,
+    },
+    async(token,done) =>{
+      // console.log(cookieParser)
+        done(null,token.user);
+    }
+  )
+
+)
 app.get("/login", (req, res, next) => {
 
   res.send("login page");
@@ -83,18 +88,14 @@ app.get("/login", (req, res, next) => {
 //DOUBLE CHECK
 app.post(
   "/login", async(req,res,next) =>{
-
   passport.authenticate("login",  async function(error,user,info){
-
     if(error){
       console.log("error")
-
       res.json(error);
     }
     if(!user){
       res.statusMessage = "User Not Found";
       res.status(400).end();
-
     }
     else{
       const body = {_id: user.id, username: user.username}; //creates a unique body to use for the webtoken
@@ -113,7 +114,18 @@ app.post(
       //     }
       //   }
       // )
-      res.json({user,token});
+      // res.cookie("jwt",token).json({user,token});
+
+      res.cookie("jwt_token", token, {
+        path: "/",
+        httpOnly: false,
+        expires: new Date(Date.now() + 1000000),
+        same_site: "none",
+        secure: true,
+          }).json({user,token});
+      // res.json({user,token});
+
+      // res.json({user,token});
     }
     
   })(req,res,next);
@@ -134,7 +146,7 @@ app.post("/logout", async (req, res, next) => {
     //     }
     //   }
     // )
-
+    res.clearCookie("jwt_token");
     res.json("loggin out");
   });
   const updatedUser= await User.findByIdAndUpdate(req.body.userid, {isactive:false}, {}).exec();
