@@ -120,7 +120,7 @@ app.post(
         path: "/",
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
-        domain:"localhost",
+        domain:"",
         sameSite: "none",
         secure: true,
         partitioned
