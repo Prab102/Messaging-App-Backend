@@ -6,8 +6,8 @@ var logger = require('morgan');
 const bcrypt = require("bcryptjs");
 const fs = require("fs")
 const localStorage = require("./localStorage.json");
-// const session = require("express-session"); //for authentication
-var session = require('cookie-session');
+const session = require("express-session"); //for authentication
+// var session = require('cookie-session');
 const cors = require('cors');
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -53,6 +53,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true })); //authentication
+
 app.use(passport.session());
 
 app.use('/', indexRouter);
@@ -61,7 +62,7 @@ app.use('/api',apiRouter);
 
 //jwt startegy
 function  getjwt(req){
-  console.log("this is token",req.cookies.jwt_token);
+  console.log("this is token",req.cookies);
   const token = req.cookies.jwt_token
   return token;
   // return localStorage.Authorization?.substring(7); //removes "bearer " from token
@@ -147,7 +148,7 @@ app.post("/logout", async (req, res, next) => {
     //     }
     //   }
     // )
-    res.clearCookie("jwt_token");
+    // res.clearCookie("jwt_token");
     res.json("loggin out");
   });
   const updatedUser= await User.findByIdAndUpdate(req.body.userid, {isactive:false}, {}).exec();
