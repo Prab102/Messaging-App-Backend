@@ -44,7 +44,7 @@ app.set('view engine', 'pug');
 app.use(passport.initialize());
 // app.use(cors({ credentials: true, origin:"https://localhost:5173",exposedHeaders: ["set-cookie"],})) //change when live or testing
 
-app.use(cors({ credentials: true, origin:"https://messaging-app-frontend-seven.vercel.app", exposedHeaders: ["set-cookie"] })) //change when live or testing
+app.use(cors({ credentials: true, origin:"https://messaging-app-frontend-kwkhvy81g-prabjot-s-projects.vercel.app", exposedHeaders: ["set-cookie"] })) //change when live or testing
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -122,7 +122,7 @@ app.post(
         path: "/",
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
-        domain:".vercel.app",
+        domain:"messaging-app-frontend-kwkhvy81g-prabjot-s-projects.vercel.app",
         sameSite: "none",
         secure: true,
           }).json({user,token});
