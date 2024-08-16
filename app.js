@@ -126,7 +126,6 @@ app.post(
         secure: true,
           }).json({user,token});
       // res.json({user,token});
-
       // res.json({user,token});
     }
     
