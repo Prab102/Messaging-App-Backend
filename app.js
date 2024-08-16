@@ -122,7 +122,7 @@ app.post(
         path: "/",
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
-        domain:".messaging-app-prabsingh.vercel.app",
+        domain:"messaging-app-prabsingh.vercel.app",
         sameSite: "none",
         secure: true,
           }).json({user,token});
