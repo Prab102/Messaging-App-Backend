@@ -122,6 +122,7 @@ app.post(
         path: "/",
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
+        domain:"messaging-app-frontend-seven.vercel.app",
         sameSite: "none",
         secure: true,
           }).json({user,token});
