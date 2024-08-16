@@ -120,7 +120,6 @@ app.post(
         path: "/",
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
-        domain:"",
         sameSite: "none",
         secure: true,
           }).json({user,token});
