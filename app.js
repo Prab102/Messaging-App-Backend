@@ -120,8 +120,9 @@ app.post(
         path: "/",
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
-        same_site: "none",
+        sameSite: "none",
         secure: true,
+        partitioned,
           }).json({user,token});
       // res.json({user,token});
 
