@@ -123,7 +123,7 @@ app.post(
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
         sameSite: "none",
-        secure: false,
+        secure: true,
           }).json({user,token});
       // res.json({user,token});
 
