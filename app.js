@@ -41,7 +41,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(passport.initialize());
-app.use(cors({ credentials: true, origin:"*", exposedHeaders: ["set-cookie"],})) //change when live or testing
+app.use(cors({ credentials: true, origin:false, exposedHeaders: ["set-cookie"],})) //change when live or testing
 
 // app.use(cors({ credentials: true, origin:"https://messaging-app-frontend-seven.vercel.app", exposedHeaders: ["set-cookie"] })) //change when live or testing
 
