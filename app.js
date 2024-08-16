@@ -42,7 +42,7 @@ app.set('view engine', 'pug');
 
 app.use(passport.initialize());
 
-app.use(cors({ credentials: true, origin: "https://messaging-app-frontend-seven.vercel.app/", exposedHeaders: ["set-cookie"] })) //change when live or testing
+app.use(cors({ credentials: true, origin:"https://messaging-app-frontend-seven.vercel.app", exposedHeaders: ["set-cookie"] })) //change when live or testing
 
 app.use(logger('dev'));
 app.use(express.json());
