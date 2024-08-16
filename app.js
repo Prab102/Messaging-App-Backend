@@ -122,7 +122,6 @@ app.post(
         expires: new Date(Date.now() + 1000000),
         sameSite: "none",
         secure: true,
-        partitioned,
           }).json({user,token});
       // res.json({user,token});
 
