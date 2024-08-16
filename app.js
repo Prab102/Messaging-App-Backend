@@ -41,7 +41,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(passport.initialize());
-app.use(cors({ credentials: true, exposedHeaders: ["set-cookie"],})) //change when live or testing
+app.use(cors({ credentials: true, origin:"http://localhost:5173",exposedHeaders: ["set-cookie"],})) //change when live or testing
 
 // app.use(cors({ credentials: true, origin:"https://messaging-app-frontend-seven.vercel.app", exposedHeaders: ["set-cookie"] })) //change when live or testing
 
@@ -121,9 +121,8 @@ app.post(
         httpOnly: false,
         expires: new Date(Date.now() + 1000000),
         domain:"",
-        sameSite: "none",
-        secure: true,
-        partitioned
+        // sameSite: "none",
+        // secure: true,
           }).json({user,token});
       // res.json({user,token});
 
