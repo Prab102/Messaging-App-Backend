@@ -42,8 +42,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(passport.initialize());
-// app.use(cors({ credentials: true, origin:"https://localhost:5173",exposedHeaders: ["set-cookie"],})) //change when live or testing
-
+// app.use(cors({ credentials: true, origin:"http://localhost:5173",exposedHeaders: ["set-cookie"],})) //change when live or testing
 app.use(cors({ credentials: true, origin:"https://messagingapp.prabsingh.io", exposedHeaders: ["set-cookie"] })) //change when live or testing
 
 app.use(logger('dev'));
@@ -121,8 +120,8 @@ app.post(
       res.cookie("jwt_token", token, {
         path: "/",
         httpOnly: false,
-        expires: new Date(Date.now() + 1000000),
-        domain:".prabsingh.io",
+        expires: new Date(Date.now() + 10000000),
+        domain:".prabsingh.io", //change for testing
         sameSite: "none",
         secure: true,
           }).json({user,token});

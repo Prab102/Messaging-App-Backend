@@ -10,7 +10,7 @@ const passport = require("passport");
 
 //TODO
 router.get('/', function(req, res, next) {
-    res.send("hello welcome");
+    res.send("MESSAGING APP API");
 });
 
 router.post("/users", user_controller.user_create_post);
