@@ -130,7 +130,8 @@ exports.user_create_post = [
                         // There are errors. Render form again with sanitized values/error messages.
                         console.log(errors.errors[0].msg);
                         res.statusMessage = errors.errors[0].msg;
-                        res.send(errors.errors[0].msg);
+                        res.status(400).end();
+                        // res.send(errors.errors[0].msg);
                         // res.responseText(errors.errors[0].msg);
                       }else{
                         await user.save();
